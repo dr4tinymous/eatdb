@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+        <%- include('partials/head') %>
+<body>
+    <main>
+        <div class="recipe-detail">
+            <h1><%= recipe.title %></h1>
+
+<% // Check if the title has a counter appended at the end in parentheses %>
+<% if (/\(\d+\)$/.test(recipe.title)) { %>
+    <% let originalTitle = recipe.title.replace(/\s\(\d+\)$/, ''); %>
+    <p><a href="/recipes/title/<%= originalTitle %>">Original <%= originalTitle %></a></p>
+<% } %>
+
+            <p><strong>Prep Time:</strong> <%= recipe.prepTime %> minutes</p>
+            <p><strong>Cook Time:</strong> <%= recipe.cookTime %> minutes</p>
+            <p><strong>Serving Amount:</strong> <%= recipe.servingAmount %></p>
+
+            <h2>Ingredients</h2>
+            <ul class="list-container">
+                <% ingredients && ingredients.forEach(ingredient => { %>
+		<a href="/ingredients/<%= ingredient.id %>"><li><%= ingredient.name %></li></a>
+                <% }); %>
+            </ul>
+
+            <h2>Equipment</h2>
+            <% if (equipment && equipment.length > 0) { %>
+                <ul class="list-container">
+                    <% equipment.forEach(item => { %>
+		    <a href="/equipment/<%= item.id %>"><li><%= item.name %></li></a>
+                    <% }); %>
+                </ul>
+            <% } else { %>
+                <p>No equipment listed for this recipe.</p>
+            <% } %>
+
+            <h2>Pre-Cooking Considerations</h2>
+            <p><%= recipe.preCookingConsiderations %></p>
+
+            <h2>Directions</h2>
+            <p><%= recipe.directions %></p>
+
+            <h2>Extra Information</h2>
+            <p><%= recipe.extraInformation %></p>
+
+            <h2>Styles</h2>
+            <% if (styles && styles.length > 0) { %>
+                <ul class="list-container">
+                    <% styles.forEach(style => { %>
+		    <a href="/styles/<%= style.id %>"><li><%= style.name %></li></a>
+                    <% }); %>
+                </ul>
+            <% } else { %>
+                <p>No styles listed for this recipe.</p>
+            <% } %>
+        </div>
+    </main>
+    <%- include('partials/footer.ejs') %>
+</body>
+</html>

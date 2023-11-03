@@ -1,0 +1,5 @@
+<ul class="list-container">
+    <% recipes.forEach(function(recipe) { %>
+        <a href="/recipes/<%= recipe.id %>"><li><%= recipe.title %></li></a>
+    <% }); %>
+</ul>

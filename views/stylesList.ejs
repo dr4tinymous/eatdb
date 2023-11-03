@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+	<%- include('partials/head') %>
+<body>
+        <main>
+    <h1>Styles</h1>
+            <ul class="list-container">
+                <% styles.forEach(function(item) { %>
+                <li><a href="/styles/<%= item.id %>"><%= item.name %></a></li>
+                <% }); %>
+            </ul>
+        </main>
+    <%- include('partials/footer.ejs') %>
+</body>
+</html>

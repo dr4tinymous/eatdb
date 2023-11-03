@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include('partials/head') %>
+    <script src="/scripts/dropdownHandler.js" defer></script>
+    <script src="/scripts/submitDirections.js" defer></script>
+    <script src="/scripts/formBtn.js" defer></script>
+</head>
+<body>
+    <main>
+        <h2>Submit Your Recipe</h2>
+        <form action="/submit" method="post">
+            <!-- Title, Prep Time, Cook Time, Serving Amount -->
+            <div>
+                    <label for="title">Recipe Title:</label>
+                    <input type="text" id="title" name="title" placeholder="e.g., Vegan Pasta" required>
+                </div>
+                <div>
+                    <label for="prepTime">Preparation Time (in minutes):</label>
+                    <input type="number" id="prepTime" name="prepTime" placeholder="20" required>
+                </div>
+                <div>
+                    <label for="cookTime">Cooking Time (in minutes):</label>
+                    <input type="number" id="cookTime" name="cookTime" placeholder="60" required>
+                </div>
+                <div>
+                    <label for="servingAmount">Serving Amount:</label>
+                    <input type="number" id="servingAmount" name="servingAmount" placeholder="e.g., 4" required>
+                </div>
+
+            <!-- Ingredients Dropdown -->
+            <div>
+                <label for="ingredientSelect">Ingredients:</label>
+                <select id="ingredientSelect" name="ingredients[]" multiple required></select>
+            </div>
+
+            <!-- Equipment Dropdown -->
+            <div>
+                <label for="equipmentSelect">Equipment:</label>
+                <select id="equipmentSelect" name="equipment[]" multiple required></select>
+            </div>
+
+            <!-- Styles Dropdown -->
+            <div>
+                <label for="styleSelect">Styles:</label>
+                <select id="styleSelect" name="styles[]" multiple required></select>
+            </div>
+
+            <!-- Pre-cooking Considerations -->
+            <div>
+                    <label for="preCookingConsiderations">Pre-cooking Considerations:</label>
+                    <textarea id="preCookingConsiderations" name="preCookingConsiderations" placeholder="Any steps or preparations to consider before starting?"></textarea>
+                </div>
+
+            <!-- Directions -->
+            <div class="directions-container">
+                <label>Directions:</label>
+                <div class="directions-list">
+                    <div class="direction" data-step="1">
+                        <label for="direction-1">Step 1:</label>
+                        <textarea id="direction-1" name="directions[]" required placeholder="Describe this step..."></textarea>
+                        <button type="button" class="remove-direction">Remove</button>
+                    </div>
+                </div>
+                <button type="button" id="add-direction">Add Direction</button>
+            </div>
+
+            <!-- Extra Information -->
+            <div>
+                    <label for="extraInformation">Extra Information:</label>
+                    <textarea id="extraInformation" name="extraInformation" placeholder="Any additional tips, variations or notes."></textarea>
+                </div>
+
+            <!-- Submission Button -->
+            <button type="submit" id="submitBtn">Submit Recipe</button>
+        </form>
+    </main>
+
+    <%- include('partials/footer.ejs') %>
+</body>
+</html>

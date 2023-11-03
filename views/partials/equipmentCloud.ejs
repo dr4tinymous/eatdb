@@ -1,0 +1,5 @@
+<ul class="list-container">
+    <% equipmentList.forEach(function(equipment) { %>
+        <a href="/equipment/<%= equipment.id %>"><li><%= equipment.name %></li></a>
+    <% }); %>
+</ul>

@@ -1,0 +1,22 @@
+{
+  "service_worker": "/sw.js",
+  "name": "Eat.Database",
+  "short_name": "EatDB",
+  "description": "Recipes & Nutrition",
+  "icons": [
+    {
+      "src": "/images/appicon_192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/appicon_512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "fullscreen",
+  "background_color": "#FFFFFF",
+  "theme_color": "#000000"
+}

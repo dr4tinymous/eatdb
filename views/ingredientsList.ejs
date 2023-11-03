@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+	<%- include('partials/head') %>
+<body>
+	<h1>Ingredients</h1>
+
+	<ul class="list-container">
+		<% ingredients.forEach(function(item) { %>
+		<a href="/ingredients/<%= item.id %>"><li><%= item.name %></li></a>
+		<% }); %>
+	</ul>
+    <%- include('partials/footer.ejs') %>
+</body>
+</html>

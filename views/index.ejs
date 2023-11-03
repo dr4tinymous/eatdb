@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+	<%- include('partials/head') %>
+<body>
+    <script src="/register_sw.js"></script>
+    <main>
+	    <h1><a href="/recipes">Recipes</a></h1>
+    <%- include('partials/recipesCloud.ejs', {recipes: recipes}) %>
+
+    <h1><a href="/ingredients">Ingredients</a></h1>
+    <%- include('partials/ingredientsCloud.ejs', {ingredients: ingredients}) %>
+
+    <h1><a href="/styles">Styles</a></h1>
+    <%- include('partials/stylesCloud.ejs', {styles: styles}) %>
+
+    <h1><a href="/equipment">Equipment</a></h1>
+    <%- include('partials/equipmentCloud.ejs', {equipmentList: equipmentList}) %>
+    </main>
+    <%- include('partials/footer.ejs') %>
+</body>
+</html>

@@ -1,0 +1,8 @@
+node_modules/
+*.env
+*.bak
+bak/*
+config/config.json
+views/*.ejs.bak
+.DS_Store
+controllers/recipes/*.bak

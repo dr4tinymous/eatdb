@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<%- include('partials/head') %>
+<body>
+    <main>
+        <h2>Submit Your Recipe</h2>
+        <form action="/submit" method="post">
+            <div>
+                <label for="title">Recipe Title:</label>
+                <input type="text" id="title" name="title" placeholder="e.g., Vegan Pasta" required>
+            </div>
+
+                <div>
+                    <label for="prepTime">Preparation Time (in minutes):</label>
+                    <input type="number" id="prepTime" name="prepTime" placeholder="20" required>
+                </div>
+                <div>
+                    <label for="cookTime">Cooking Time (in minutes):</label>
+                    <input type="number" id="cookTime" name="cookTime" placeholder="60" required>
+                </div>
+
+            <div>
+                <label for="servingAmount">Serving Amount:</label>
+                <input type="number" id="servingAmount" name="servingAmount" placeholder="e.g., 4" required>
+            </div>
+
+            <!-- Ingredients Dropdown -->
+            <div>
+                <label for="ingredients">Ingredients:</label>
+                <select id="ingredientsDropdown" name="ingredients[]" multiple>
+                    <!-- Replace with data fetched from the 'eatdb' database -->
+                    <% ingredientsFromDB.forEach(function(ingredient) { %>
+                        <option value="<%= ingredient.id %>"><%= ingredient.name %></option>
+                    <% }); %>
+                    <option value="addNew">+ Add New Ingredient</option>
+                </select>
+                <input type="text" id="newIngredient" name="newIngredient" placeholder="Enter new ingredient" style="display:none;">
+            </div>
+
+            <!-- Equipment Dropdown -->
+            <div>
+                <label for="equipment">Equipment:</label>
+                <select id="equipmentDropdown" name="equipment[]" multiple>
+                    <!-- Replace with data fetched from the 'eatdb' database -->
+                    <% equipmentFromDB.forEach(function(equipment) { %>
+                        <option value="<%= equipment.id %>"><%= equipment.name %></option>
+                    <% }); %>
+                    <option value="addNew">+ Add New Equipment</option>
+                </select>
+                <input type="text" id="newEquipment" name="newEquipment" placeholder="Enter new equipment" style="display:none;">
+            </div>
+
+            <!-- Styles Dropdown -->
+            <div>
+                <label for="styles">Styles:</label>
+                <select id="stylesDropdown" name="styles[]" multiple>
+                    <!-- Replace with data fetched from the 'eatdb' database -->
+                    <% stylesFromDB.forEach(function(style) { %>
+                        <option value="<%= style.id %>"><%= style.name %></option>
+                    <% }); %>
+                    <option value="addNew">+ Add New Style</option>
+                </select>
+                <input type="text" id="newStyle" name="newStyle" placeholder="Enter new style" style="display:none;">
+            </div>
+
+            <!-- ... (other form fields) -->
+
+            <button type="submit" id="submitBtn">Submit Recipe</button>
+        </form>
+        <script src="/formBtn.js"></script>
+    </main>
+    <%- include('partials/footer.ejs') %>
+    <script src="scripts/submitDirections.js"></script>
+    <script src="scripts/dropdownHandler.js"></script>
+</body>
+
+</html>

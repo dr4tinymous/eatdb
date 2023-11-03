@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('partials/head') %>
+    <body>
+        <header>
+            <h1>Recipes</h1>
+        </header>
+        <main>
+            <ul class="list-container">
+                <% recipes.forEach(function(item) { %>
+                <li><a href="/recipes/<%= item.id %>"><%= item.title %></a></li>
+                <% }); %>
+            </ul>
+        </main>
+    <%- include('partials/footer.ejs') %>
+    </body>
+</html>

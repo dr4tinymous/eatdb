@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+	<%- include('partials/head') %>
+<body>
+	<main>
+    <h1><%= ingredient.name %></h1>
+    <h2>Associated Recipes</h2>
+<% if (ingredient && ingredient.recipes && ingredient.recipes.length > 0) { %>
+    <ul class="list-container">
+        <% ingredient.recipes.forEach(recipe => { %>
+            <li><a href="/recipes/<%= recipe.id %>"><%= recipe.title %></a></li>
+        <% }); %>
+    </ul>
+<% } else { %>
+    <p>No associated recipes.</p>
+<% } %>
+</main>
+    <%- include('partials/footer.ejs') %>
+</body>
+</html>
