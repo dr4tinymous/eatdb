@@ -3,10 +3,7 @@ exports.up = function(knex) {
     table.increments('id').primary();
     table.integer('recipeId').unsigned().references('recipes.id');
     table.integer('equipmentId').unsigned().references('equipment.id');
-    table.unique(['recipeId', 'equipmentId']);
-  });
-};
+    table.unique(['recipeId', 'equipmentId']);});};
 
 exports.down = function(knex) {
-  return knex.schema.dropTable('recipe_equipment');
-};
+  return knex.schema.dropTable('recipe_equipment');};

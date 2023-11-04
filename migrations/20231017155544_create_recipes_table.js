@@ -8,10 +8,7 @@ exports.up = function(knex) {
     table.text('preCookingConsiderations');
     table.text('directions').notNullable();
     table.text('extraInformation');
-    table.timestamps(true, true);
-  });
-};
+    table.timestamps(true, true);});};
 
 exports.down = function(knex) {
-  return knex.schema.dropTable('recipes');
-};
+  return knex.schema.dropTable('recipes');};

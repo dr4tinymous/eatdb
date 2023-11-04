@@ -3,10 +3,7 @@ exports.up = function(knex) {
     table.increments('id').primary();
     table.integer('recipeId').unsigned().references('recipes.id');
     table.integer('stylesId').unsigned().references('styles.id');
-    table.unique(['recipeId', 'stylesId']); // ensures unique combinations
-  });
-};
+    table.unique(['recipeId', 'stylesId']);});};
 
 exports.down = function(knex) {
-  return knex.schema.dropTable('recipe_styles');
-};
+  return knex.schema.dropTable('recipe_styles');};
