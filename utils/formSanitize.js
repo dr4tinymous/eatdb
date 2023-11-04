@@ -1,11 +1,12 @@
-const { sanitizeBody } = require('express-validator');
-exports.sanitizeRecipeInput = [
-    sanitizeBody('title').trim().escape(),
-    
-    sanitizeBody('servings').toInt(),
-    
-    sanitizeBody('ingredients.*').trim().escape(),
-    
-    sanitizeBody('preparation_steps.*').trim().escape(),
-    
-    sanitizeBody('equipment.*').optional({ checkFalsy: true }).trim().escape(),];
+
+const pluralize = require('pluralize');
+
+function capitalize(str) {
+    return str.replace(/\b\w/g, ([char]) => char.toUpperCase());
+}
+
+function toSingularForm(str) {
+    return pluralize.singular(str);
+}
+
+module.exports = { capitalize, toSingularForm };
