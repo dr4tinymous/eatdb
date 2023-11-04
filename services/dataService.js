@@ -1,63 +1,43 @@
 const knex = require('../config/database');
 const { capitalize, toSingularForm } = require('../utils/formSanitize');
 
-async function getAllIngredients() {
-    return await getAllData('ingredients');
-}
-
-async function getAllEquipment() {
-    return await getAllData('equipment');
-}
-
-async function getAllStyles() {
-    return await getAllData('styles');
-}
-
 async function getAllData(tableName) {
     return await knex(tableName).select('*');
 }
 
 async function getUniqueTitle(title, trx) {
     let uniqueTitle = capitalize(toSingularForm(title));
-    let counter = 2;
     let exists = await trx('recipes').where('title', uniqueTitle).first();
-
+    let counter = 2;
     while (exists) {
         uniqueTitle = `${title} (${counter++})`;
         exists = await trx('recipes').where('title', uniqueTitle).first();
     }
-
     return uniqueTitle;
 }
 
-async function insertItemIfNotExist(table, item) {
-    const columnName = table === 'recipes' ? 'title' : 'name';
-    const [existingItem] = await knex(table).where(columnName, item[columnName]);
-    if (existingItem) {
-      return existingItem.id;
-    } else {
-      const [newItemId] = await knex(table).insert(item, 'id');
-      return newItemId;
+async function insertItemIfNotExist(itemName, tableName, trx) {
+    let item = await trx(tableName).where('name', itemName).first();
+    if (!item) {
+        [item] = await trx(tableName).insert({ name: itemName }).returning('*');
     }
-  }
+    return item.id;
+}
 
-async function insertRelatedItems(table, items, recipeId, trx) {
+async function insertRelatedItems(tableName, items, recipeId, trx) {
     for (const itemName of items) {
-        const singularName = toSingularForm(itemName);
-        const capitalized = capitalize(singularName);
-        const itemId = await insertItemIfNotExist(capitalized, table, trx);
-
-        await trx(`recipe_${table}`).insert({
+        const itemId = await insertItemIfNotExist(itemName, `${tableName}s`, trx);
+        const joinTable = `recipe_${tableName}s`;
+        const column = `${tableName}Id`; // Correct foreign key column name
+        await trx(joinTable).insert({
             recipeId,
-            [`${table.slice(0, -1)}Id`]: itemId
+            [column]: itemId
         });
     }
 }
 
 module.exports = {
-    getAllIngredients,
-    getAllEquipment,
-    getAllStyles,
+    getAllData,
     getUniqueTitle,
     insertItemIfNotExist,
     insertRelatedItems

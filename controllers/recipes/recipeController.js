@@ -1,77 +1,43 @@
 const recipeService = require('../../services/recipeService');
-const dataService = require('../../services/dataService');
-const { getUniqueName, capitalize } = require('../../utils/formSanitize');
 
 exports.getAllRecipes = async (req, res) => {
     try {
         const recipes = await recipeService.getAllRecipes();
         res.render('recipesList', { recipes, title: 'Recipes' });
     } catch (error) {
-        console.error("Error retrieving recipes:", error);
-        res.status(500).send("Error retrieving recipes");}};
-
-exports.renderSubmitForm = async (req, res) => {
-    try {
-        res.render('submitForm', {
-            title: 'Add Recipe'
-        });
-    } catch (error) {
-        console.error("Error rendering the submit form:", error);
-        res.status(500).send("Error displaying the submit form");}};
+        res.status(500).send("Error retrieving recipes: " + error.message);
+    }
+};
 
 exports.getRecipeById = async (req, res) => {
-    const { id } = req.params;
     try {
-        const recipeDetails = await recipeService.getRecipeDetailsById(id);
+        const recipeDetails = await recipeService.getRecipeDetailsById(req.params.id);
         if (!recipeDetails) {
             return res.status(404).send('Recipe not found');
         }
-        res.render('recipeDetail', { ...recipeDetails, title: recipeDetails.recipe.title });
+        res.render('recipeDetail', { ...recipeDetails, title: recipeDetails.title });
     } catch (error) {
-        console.error("Error retrieving recipe by ID:", error);
-        res.status(500).send("Error retrieving recipe");}};
+        res.status(500).send("Error retrieving recipe: " + error.message);
+    }
+};
 
 exports.getRecipeByTitle = async (req, res) => {
-    const { title } = req.params;
     try {
-        const recipeDetails = await recipeService.getRecipeDetailsByTitle(title);
+        const recipeDetails = await recipeService.getRecipeDetailsByTitle(req.params.title);
         if (!recipeDetails) {
             return res.status(404).send('Recipe not found');
         }
-        res.render('recipeDetail', { ...recipeDetails, title: recipeDetails.recipe.title });
+        res.render('recipeDetail', { ...recipeDetails, title: recipeDetails.title });
     } catch (error) {
-        console.error("Error retrieving recipe by title:", error);
-        res.status(500).send("Error retrieving recipe");}};
+        res.status(500).send("Error retrieving recipe: " + error.message);
+    }
+};
 
 exports.submitRecipe = async (req, res) => {
     try {
-        const {
-            title,
-            prepTime,
-            cookTime,
-            servingAmount,
-            preCookingConsiderations,
-            directions,
-            extraInformation,
-            ingredients = [],
-            equipment = [],
-            styles = [],
-        } = req.body;
-
-        const savedRecipe = await recipeService.submitRecipe({
-            title,
-            prepTime,
-            cookTime,
-            servingAmount,
-            preCookingConsiderations,
-            directions,
-            extraInformation,
-            ingredients,
-            equipment,
-            styles,
-        });
-
+        const savedRecipe = await recipeService.submitRecipe(req.body);
         res.redirect(`/recipes/${savedRecipe.id}`);
     } catch (error) {
-        console.error("Error submitting recipe:", error);
-        res.status(500).send("Error submitting recipe");}};
+        res.status(500).send("Error submitting recipe: " + error.message);
+    }
+};
