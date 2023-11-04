@@ -5,7 +5,7 @@ async function getAllRecipes() {
 }
 
 async function getRecipeDetailsById(id) {
-    const recipe = await knex('recipes').where('id', id).first();
+    const recipe = await knex('recipes').where('id', id).select('title', 'id').first(); // changed 'name' to 'title'
 
     if (!recipe) {
         return null;
@@ -30,7 +30,7 @@ async function getRecipeDetailsById(id) {
 }
 
 async function getRecipeDetailsByTitle(title) {
-    const recipe = await knex('recipes').where('title', title).first();
+    const recipe = await knex('recipes').where('id', id).select('title', 'title').first(); // changed 'name' to 'title'
 
     if (!recipe) {
         return null;
