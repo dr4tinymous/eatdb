@@ -29,35 +29,33 @@
 
             <div class="form-group">
                 <label for="ingredients">Ingredients:</label>
-                <textarea id="ingredients" name="ingredients" placeholder="List ingredients separated by commas" required></textarea>
+                <textarea id="ingredients" name="ingredients[]" placeholder="List ingredients separated by commas" required></textarea>
             </div>
 
             <div class="form-group">
                 <label for="equipment">Equipment:</label>
-                <textarea id="equipment" name="equipment" placeholder="List equipment separated by commas" required></textarea>
+                <textarea id="equipment" name="equipment[]" placeholder="List equipment separated by commas" required></textarea>
             </div>
 
             <div class="form-group">
                 <label for="styles">Styles:</label>
-                <textarea id="styles" name="styles" placeholder="List styles separated by commas" required></textarea>
+                <textarea id="styles" name="styles[]" placeholder="List styles separated by commas" required></textarea>
             </div>
 
             <div class="form-group">
                 <label for="preCookingConsiderations">Pre-cooking Considerations:</label>
-                <textarea id="preCookingConsiderations" name="preCookingConsiderations" placeholder="Any steps or preparations to consider before starting?"></textarea>
+                <textarea id="preCookingConsiderations" name="preCookingConsiderations[]" placeholder="Any steps or preparations to consider before starting?"></textarea>
             </div>
 
             <div class="form-group">
                 <label for="directions">Directions:</label>
-                <textarea id="directions" name="directions" placeholder="Describe steps one by one" required></textarea>
+                <textarea id="directions" name="directions[]" placeholder="Describe steps one by one" required></textarea>
             </div>
 
             <div class="form-group">
                 <label for="extraInformation">Extra Information:</label>
-                <textarea id="extraInformation" name="extraInformation" placeholder="Any additional tips, variations or notes."></textarea>
+                <textarea id="extraInformation" name="extraInformation[]" placeholder="Any additional tips, variations or notes."></textarea>
             </div>
-
-            <div class="form-group">
                 <button type="submit" id="submitBtn">Submit Recipe</button>
             </div>
         </form>

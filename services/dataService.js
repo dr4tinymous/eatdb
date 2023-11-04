@@ -25,14 +25,22 @@ async function insertItemIfNotExist(itemName, tableName, trx) {
 }
 
 async function insertRelatedItems(tableName, items, recipeId, trx) {
-    for (const itemName of items) {
-        const itemId = await insertItemIfNotExist(itemName, `${tableName}s`, trx);
-        const joinTable = `recipe_${tableName}s`;
-        const column = `${tableName}Id`; // Correct foreign key column name
-        await trx(joinTable).insert({
-            recipeId,
-            [column]: itemId
-        });
+    for (const item of items) {
+        const itemId = await insertItemIfNotExist({ name: item }, tableName, trx);
+        const joinTable = `recipe_${tableName}`;
+        const column = `${tableName.slice(0, -1)}Id`; // Correct foreign key column name
+        
+        // Check if the relation already exists to prevent duplicate entries
+        const existingRelation = await trx(joinTable)
+            .where({ recipeId, [column]: itemId })
+            .first();
+            
+        if (!existingRelation) {
+            await trx(joinTable).insert({
+                recipeId,
+                [column]: itemId
+            });
+        }
     }
 }
 

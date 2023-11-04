@@ -38,20 +38,37 @@ async function getRecipeDetailsByTitle(title) {
 }
 
 async function submitRecipe(recipeData) {
+    if (typeof recipeData.title !== 'string' || recipeData.title.trim() === '') {
+        throw new Error('Invalid title. Title must be a non-empty string.');
+    }
+    if (!Array.isArray(recipeData.ingredients)) {
+        throw new Error('Invalid ingredients. Ingredients must be an array.');
+    }
+    if (!Array.isArray(recipeData.preparation_steps)) {
+        throw new Error('Invalid preparation steps. Preparation steps must be an array.');
+    }
+
+    if (recipeData.servings && (typeof recipeData.servings !== 'number' || recipeData.servings <= 0)) {
+        throw new Error('Invalid servings. Servings must be a positive number.');
+    }
+
     const trx = await knex.transaction();
     try {
         const uniqueTitle = await getUniqueTitle(recipeData.title, trx);
-        const [recipeId] = await trx('recipes').insert({ ...recipeData, title: uniqueTitle }).returning('id');
+        const { ingredients, equipment, styles, ...dataWithoutItems } = recipeData;
+        const [recipeId] = await trx('recipes').insert({ ...dataWithoutItems, title: uniqueTitle }).returning('id');
         
-        await insertRelatedItems('ingredient', recipeData.ingredients, recipeId, trx);
-        await insertRelatedItems('equipment', recipeData.equipment, recipeId, trx);
-        await insertRelatedItems('style', recipeData.styles, recipeId, trx);
+        await Promise.all([
+            insertRelatedItems('ingredient', ingredients, recipeId, trx),
+            insertRelatedItems('equipment', equipment, recipeId, trx),
+            insertRelatedItems('style', styles, recipeId, trx)
+        ]);
 
         await trx.commit();
-        return { id: recipeId };
+        return recipeId;
     } catch (error) {
         await trx.rollback();
-        throw new Error('Error during recipe submission: ' + error.message);
+        throw error;
     }
 }
 
