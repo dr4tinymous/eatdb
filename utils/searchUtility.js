@@ -21,9 +21,6 @@ async function getSearchResultsForRecipes(searchTerm) {
                 .join('equipment', 'recipe_equipment.equipmentId', 'equipment.id')
                 .whereRaw('"recipes"."id" = "recipe_equipment"."recipeId" AND (equipment.name ILIKE ?)', [`%${searchTerm}%`]);
         })
-        .distinct('recipes.id', 'recipes.title');
-}
+        .distinct('recipes.id', 'recipes.title');}
 
-module.exports = {
-    getSearchResultsForRecipes
-};
+module.exports = {getSearchResultsForRecipes};

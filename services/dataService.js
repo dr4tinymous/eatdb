@@ -28,9 +28,8 @@ async function insertRelatedItems(tableName, items, recipeId, trx) {
     for (const item of items) {
         const itemId = await insertItemIfNotExist({ name: item }, tableName, trx);
         const joinTable = `recipe_${tableName}`;
-        const column = `${tableName.slice(0, -1)}Id`; // Correct foreign key column name
+        const column = `${tableName.slice(0, -1)}Id`;
         
-        // Check if the relation already exists to prevent duplicate entries
         const existingRelation = await trx(joinTable)
             .where({ recipeId, [column]: itemId })
             .first();
