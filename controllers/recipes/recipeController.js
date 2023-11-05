@@ -26,7 +26,7 @@ exports.getRecipeById = async (req, res) => {
     }
 };
 
-const { submitRecipe } = require('../services/recipeService');
+const { submitRecipe } = require('../../services/recipeService');
 
 exports.submitRecipe = async (req, res, next) => {
     try {

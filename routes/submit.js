@@ -8,6 +8,6 @@ router.get('/', (req, res) => {
     res.render('submitForm', { title: 'Add Recipe' });
 });
 
-router.post('/', [validateRecipeInput, ...sanitizeInput], recipeController.submitRecipe);
+router.post('/', [validateRecipeInput, sanitizeInput], recipeController.submitRecipe);
 
 module.exports = router;
