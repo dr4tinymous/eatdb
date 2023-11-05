@@ -1,5 +1,4 @@
-const { getAllRecipes, getRecipeById } = require('../../services/recipeService');
-
+const { getAllRecipes, getRecipeById, submitRecipe } = require('../../services/recipeService');
 exports.getAllRecipes = async (req, res, next) => {
     try {
         const recipes = await getAllRecipes();
@@ -25,8 +24,6 @@ exports.getRecipeById = async (req, res) => {
         res.status(500).send("An error occurred while retrieving recipe details.");
     }
 };
-
-const { submitRecipe } = require('../../services/recipeService');
 
 exports.submitRecipe = async (req, res, next) => {
     try {
